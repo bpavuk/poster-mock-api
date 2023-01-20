@@ -1,9 +1,8 @@
-from typing import List
 
 from data.fakes import fake
 from model.Post import Post
 
-posts: List[Post] = [
+posts: list[Post] = [
     Post(
         id=24,
         author_id=0,
