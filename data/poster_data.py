@@ -1,6 +1,7 @@
 
 from data.fakes import fake
 from model.Post import Post
+from model.User import User
 
 posts: list[Post] = [
     Post(
@@ -21,4 +22,12 @@ posts: list[Post] = [
         img_url=f"{fake.image_url()}",
         text=f"{fake.paragraph()}"
     ),
+]
+
+users: list[User] = [
+    User(
+        id=i,
+        profile_img=f"{fake.image_url()}",
+        user_name=f"{fake.user_name()}"
+    ) for i in range(5)
 ]
