@@ -6,7 +6,7 @@ app = FastAPI()
 
 
 @app.get("/posts/{post_id}")
-def get_post(post_id: int):
+async def get_post(post_id: int):
     return posts[post_id]
 
 
