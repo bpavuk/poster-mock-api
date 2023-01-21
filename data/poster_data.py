@@ -1,4 +1,4 @@
-from random import random, choice
+from random import choice
 
 from data.fakes import fake
 from model.Post import Post
