@@ -30,5 +30,9 @@ async def get_user(user_id: int):
 
 @app.post("/posts/new")
 def publish_post(post: Post) -> Response:
+    for i in posts:
+        if i.id == post.id:
+            raise HTTPException(status_code=406, detail="Post with same ID exists")
+
     posts.append(post)
     return Response(state="Success")
