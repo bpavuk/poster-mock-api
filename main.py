@@ -18,7 +18,7 @@ async def get_posts(start: int = 0, limit: int = 5):
 
 
 @app.get("/user/{user_id}")
-def get_user(user_id: int):
+async def get_user(user_id: int):
     for i in range(len(users)):
         if users[i].id == user_id:
             return users[i]
