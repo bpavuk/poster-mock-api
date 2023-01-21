@@ -11,7 +11,7 @@ async def get_post(post_id: int):
 
 
 @app.get("/posts")
-def get_posts(start: int = 0, limit: int = 5):
+async def get_posts(start: int = 0, limit: int = 5):
     for i in range(len(posts)):
         if posts[i].id == start or start == 0:
             return posts[i:i + limit]
