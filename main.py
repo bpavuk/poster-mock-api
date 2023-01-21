@@ -1,6 +1,8 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 
 from data.poster_data import posts, users
+from model.Post import Post
+from model.Response import Response
 
 app = FastAPI()
 
@@ -24,3 +26,9 @@ async def get_user(user_id: int):
             return users[i]
 
     raise HTTPException(status_code=404, detail="User not found")
+
+
+@app.post("/posts/new")
+def publish_post(post: Post) -> Response:
+    posts.append(post)
+    return Response(state="Success")
