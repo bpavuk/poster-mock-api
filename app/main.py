@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException
 
-from data.poster_data import posts, users
-from model.Post import Post
-from model.Response import Response
+from app.data.poster_data import posts, users
+from app.model.Post import Post
+from app.model.Response import Response
 
 app = FastAPI()
 

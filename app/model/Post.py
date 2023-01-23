@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Union
 
-from model.User import User
+from app.model.User import User
 
 
 @dataclass

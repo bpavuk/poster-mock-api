@@ -1,8 +1,8 @@
 from random import choice
 
-from data.fakes import fake
-from model.Post import Post
-from model.User import User
+from app.data.fakes import fake
+from app.model.Post import Post
+from app.model.User import User
 
 users: list[User] = [
     User(
