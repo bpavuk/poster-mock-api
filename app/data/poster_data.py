@@ -8,7 +8,8 @@ users: list[User] = [
     User(
         id=i,
         profile_img=f"{fake.image_url()}",
-        user_name=f"{fake.user_name()}"
+        user_name=f"{fake.user_name()}",
+        hashed_password=f"{fake.password()}" + "Fuck"
     ) for i in range(5)
 ]
 
