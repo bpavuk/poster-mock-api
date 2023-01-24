@@ -1,14 +1,14 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Docker Image" type="docker-deploy" factoryName="docker-image" server-name="Docker">
+  <configuration default="false" name="Poster API image" type="docker-deploy" factoryName="docker-image" server-name="Docker">
     <deployment type="docker-image">
       <settings>
         <option name="imageTag" value="poster-fastapi" />
-        <option name="containerName" value="fuckery" />
+        <option name="containerName" value="Fuckery" />
         <option name="portBindings">
           <list>
             <DockerPortBindingImpl>
               <option name="containerPort" value="80" />
-              <option name="hostPort" value="80" />
+              <option name="hostPort" value="8000" />
             </DockerPortBindingImpl>
           </list>
         </option>
