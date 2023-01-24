@@ -1,4 +1,5 @@
 from random import choice
+from typing import Mapping
 
 from app.data.fakes import fake
 from app.model.Post import Post
@@ -12,6 +13,12 @@ users: list[User] = [
         hashed_password=f"{fake.password()}" + "Fuck"
     ) for i in range(5)
 ]
+
+for i in users:
+    print(i.user_name)
+    print(i.hashed_password)
+
+users_dict: Mapping[str, User] = { i.user_name : i for i in users  }
 
 
 posts: list[Post] = [
