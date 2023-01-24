@@ -1,10 +1,26 @@
-from fastapi import FastAPI, HTTPException
-
-from app.data.poster_data import posts, users
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from app.data.poster_data import posts, users, users_dict
 from app.model.Post import Post
 from app.model.Response import Response
+from app.utilities.util import fake_hash_password
 
 app = FastAPI()
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+@app.post("/token")
+async def login(form_data:OAuth2PasswordRequestForm = Depends()):
+    user = users_dict.get(form_data.username)
+    if not user:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+
+    hashed_password = fake_hash_password(form_data.password)
+    if not hashed_password == user.hashed_password:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+
+    return {"access_token": user.user_name, "token_type": "bearer"}
 
 
 @app.get("/posts/{post_id}")
