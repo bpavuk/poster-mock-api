@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from passlib.context import CryptContext
+
 from app.data.poster_data import posts, users, users_dict
 from app.model.Post import Post
 from app.model.Response import Response
@@ -10,6 +12,7 @@ app = FastAPI()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 @app.get("/users/me")
 async def read_users_me(current_user: User = Depends(get_current_user)):
