@@ -1,16 +1,19 @@
 from random import choice
 from typing import Mapping
-
+from passlib.context import CryptContext
 from app.data.fakes import fake
 from app.model.Post import Post
 from app.model.User import User
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 users: list[User] = [
     User(
         id=i,
         profile_img=f"{fake.image_url()}",
         user_name=f"{fake.user_name()}",
-        hashed_password=f"{fake.password()}" + "Fuck"
+        hashed_password=pwd_context.hash("fuckery")
     ) for i in range(5)
 ]
 
