@@ -32,13 +32,6 @@ def get_fake_user(db, username: str):
         return user_dict
 
 
-def fake_decode_token(token):
-    # This doesn't provide any security at all
-    # Check the next version
-    user = get_fake_user(users_dict, token)
-    return user
-
-
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
