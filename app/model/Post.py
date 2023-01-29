@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from typing import Union
 
-from app.model.User import User
+from app.model.PublicUser import PublicUser
 
 
 @dataclass
 class Post:
     id: int
-    author: User
     img_url: str
-    text: Union[str, None] = None
+    author: PublicUser | None = None
+    text: str | None = None
