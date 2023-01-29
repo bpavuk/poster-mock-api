@@ -27,19 +27,19 @@ users_dict: Mapping[str, User] = { i.user_name : i for i in users  }
 posts: list[Post] = [
     Post(
         id=24,
-        author=choice(users),
+        author=choice(users).to_public_user(),
         img_url=f"{fake.image_url()}",
         text=f"{fake.paragraph()}"
     ),
     Post(
         id=365,
-        author=choice(users),
+        author=choice(users).to_public_user(),
         img_url=f"{fake.image_url()}",
         text=f"{fake.paragraph()}"
     ),
     Post(
         id=89,
-        author=choice(users),
+        author=choice(users).to_public_user(),
         img_url=f"{fake.image_url()}",
         text=f"{fake.paragraph()}"
     ),
