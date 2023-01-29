@@ -117,16 +117,18 @@ async def get_posts(start: int = 0, limit: int = 5):
 async def get_user(user_id: int):
     for i in range(len(users)):
         if users[i].id == user_id:
-            return users[i]
+            return users[i].to_public_user()
 
     raise HTTPException(status_code=404, detail="User not found")
 
 
 @app.post("/posts/new")
-def publish_post(post: Post) -> Response:
+def publish_post(post: Post, current_user: User = Depends(get_current_user)) -> Response:
     for i in posts:
         if i.id == post.id:
             raise HTTPException(status_code=406, detail="Post with same ID exists")
+
+    post.author = current_user.to_public_user()
 
     posts.append(post)
     return Response(state="Success")
