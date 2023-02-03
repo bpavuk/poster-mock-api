@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from starlette import status
 from app.data.poster_data import users_dict, pwd_context, posts, users
 from app.model.Post import Post
+from app.model.PublicUser import PublicUser
 from app.model.Response import Response
 from app.model.User import User
 from app.secrets.secrets import SECRET_KEY
@@ -49,7 +50,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     user = get_fake_user(users_dict, username=token_data.username)
     if user is None:
         raise credentials_exception
-    return user
+    return user.to_public_user()
 
 
 def verify_password(plain_password: str, hashed_password: str):
@@ -81,7 +82,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 # ENDPOINTS
 
 @app.get("/users/me")
-async def read_users_me(current_user: User = Depends(get_current_user)):
+async def read_users_me(current_user: PublicUser = Depends(get_current_user)):
     return current_user
 
 
