@@ -14,7 +14,7 @@ users: list[User] = [
         profile_img=f"{fake.image_url()}",
         user_name=f"{fake.user_name()}",
         hashed_password=pwd_context.hash("fuckery")
-    ) for i in range(5)
+    ) for i in range(10)
 ]
 
 for i in users:
@@ -23,24 +23,11 @@ for i in users:
 
 users_dict: Mapping[str, User] = { i.user_name : i for i in users  }
 
-
 posts: list[Post] = [
     Post(
-        id=24,
+        id=i,
         author=choice(users).to_public_user(),
         img_url=f"{fake.image_url()}",
         text=f"{fake.paragraph()}"
-    ),
-    Post(
-        id=365,
-        author=choice(users).to_public_user(),
-        img_url=f"{fake.image_url()}",
-        text=f"{fake.paragraph()}"
-    ),
-    Post(
-        id=89,
-        author=choice(users).to_public_user(),
-        img_url=f"{fake.image_url()}",
-        text=f"{fake.paragraph()}"
-    ),
+    ) for i in range(100)
 ]
