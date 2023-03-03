@@ -1,4 +1,6 @@
 from datetime import timedelta, datetime
+from typing import List
+
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError
@@ -18,13 +20,16 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
+
 # DATA
 class Token(BaseModel):
     access_token: str
     token_type: str
 
+
 class TokenData(BaseModel):
     username: str | None = None
+
 
 # UTILITIES
 def get_fake_user(db, username: str):
@@ -69,6 +74,7 @@ def authenticate_user(fake_db, username: str, password: str):
         return False
     return user
 
+
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     if expires_delta:
@@ -78,6 +84,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 # ENDPOINTS
 
@@ -108,10 +115,16 @@ async def get_post(post_id: int):
 
 
 @app.get("/posts")
-async def get_posts(start: int = 0, limit: int = 5):
+async def get_posts(start: int = 0, limit: int = 5, username: str | None = None):
+    filtered_posts: List[Post] = []
+
     for i in range(len(posts)):
-        if posts[i].id == start or start == 0:
-            return posts[i:i + limit]
+        if posts[i].author.user_name == username or username is None:
+            filtered_posts.append(posts[i])
+
+    for i in range(len(filtered_posts)):
+        if filtered_posts[i].id == start or start == 0:
+            return filtered_posts[i:min(i + limit, len(filtered_posts) - 1)]
 
 
 @app.get("/user/{user_id}")
