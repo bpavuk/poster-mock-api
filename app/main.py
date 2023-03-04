@@ -6,6 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError
 from pydantic import BaseModel
 from starlette import status
+
 from app.data.poster_data import users_dict, pwd_context, posts, users
 from app.model.Post import Post
 from app.model.PublicUser import PublicUser
@@ -122,9 +123,13 @@ async def get_posts(start: int = 0, limit: int = 5, username: str | None = None)
         if posts[i].author.user_name == username or username is None:
             filtered_posts.append(posts[i])
 
+    list_to_return = []
     for i in range(len(filtered_posts)):
         if filtered_posts[i].id == start or start == 0:
-            return filtered_posts[i:min(i + limit, len(filtered_posts) - 1)]
+            list_to_return = filtered_posts[i:min(i + limit, len(filtered_posts) - 1)]
+            break
+
+    return list_to_return
 
 
 @app.get("/user/{user_id}")
